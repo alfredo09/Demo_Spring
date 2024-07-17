@@ -1,5 +1,6 @@
 package et.store.api_demo.demo.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -25,6 +26,7 @@ public class OrderDetail extends Base {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "order_id", nullable = false)
+  @JsonBackReference
   private Order order;
 
   @ManyToOne(fetch = FetchType.LAZY)

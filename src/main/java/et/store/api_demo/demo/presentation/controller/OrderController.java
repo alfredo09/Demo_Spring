@@ -4,6 +4,7 @@ import et.store.api_demo.demo.data.repository.OrderDetailRepository;
 import et.store.api_demo.demo.data.repository.OrderRepository;
 import et.store.api_demo.demo.domain.service.interfaces.OrderService;
 import et.store.api_demo.demo.domain.entity.Order;
+import et.store.api_demo.demo.presentation.request.dto.OrderDto;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api/orders")
 public class OrderController {
 
   @Autowired
@@ -47,9 +48,12 @@ public class OrderController {
   }
 
   @GetMapping("/{orderId}/details")
-  public Order getOrderWithDetails(@PathVariable Integer orderId) {
-    Order order = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
-    order.setOrderDetails(orderDetailRepository.findByOrderId(orderId));
-    return order;
+  public ResponseEntity<OrderDto> getOrderWithDetails(@PathVariable Integer orderId) {
+    OrderDto orderDto = orderService.getOrderDtoWithDetails(orderId);
+    if (orderDto != null) {
+      return ResponseEntity.ok(orderDto);
+    } else {
+      return ResponseEntity.notFound().build();
+    }
   }
 }

@@ -1,5 +1,6 @@
 package et.store.api_demo.demo.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -43,6 +44,7 @@ public class Order extends Base {
   private boolean isDelivery;
 
   @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+  @JsonManagedReference
   private List<OrderDetail> orderDetails;
 
   public void setOrderDetails(List<OrderDetail> orderDetails) {

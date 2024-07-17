@@ -1,5 +1,6 @@
 package et.store.api_demo.demo.presentation.request.dto;
 
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,4 +17,5 @@ public class OrderDto {
   private String shippingAddress;
   private boolean isDelivery;
   private Integer storeId;
+  private List<OrderDetailDto> orderDetails;
 }
