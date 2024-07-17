@@ -64,7 +64,6 @@ public class ProductController {
     return ResponseEntity.ok().body(products);
   }
 
-  // Método para convertir Product a ProductDto
   private ProductDto convertToDto(Product product) {
     ProductDto dto = new ProductDto();
     dto.setId(product.getId());
@@ -73,11 +72,9 @@ public class ProductController {
     dto.setStock(product.getStock());
     dto.setPrice(product.getPrice());
 
-    // Aquí obtenemos el categoryId de la categoría asociada al producto
     if (product.getCategory() != null) {
       dto.setCategoryId(product.getCategory().getId());
     }
-
     return dto;
   }
 }

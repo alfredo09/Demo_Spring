@@ -39,13 +39,6 @@ public class OrderDetailController {
     return ResponseEntity.status(HttpStatus.CREATED).body(createdOrderDetail);
   }
 
-  // Actualizar un detalle de pedido existente
-//  @PutMapping("/{id}")
-//  public ResponseEntity<OrderDetail> updateOrderDetail(@PathVariable Integer id, @RequestBody OrderDetail orderDetail) {
-//    OrderDetail updatedOrderDetail = orderDetailService.updateOrderDetail(id, orderDetail);
-//    return ResponseEntity.ok().body(updatedOrderDetail);
-//  }
-
   // Eliminar un detalle de pedido por su ID
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteOrderDetail(@PathVariable Integer id) {

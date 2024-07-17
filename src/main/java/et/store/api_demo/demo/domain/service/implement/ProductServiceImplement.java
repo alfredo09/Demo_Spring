@@ -42,17 +42,11 @@ public class ProductServiceImplement implements ProductService {
 
   @Override
   public Product updateProduct(Integer id, Product product) {
-    // Obtener el producto existente por su ID
     Product existingProduct = getProductById(id)
         .orElseThrow(() -> new RuntimeException("Product not found"));
-
-    // Actualizar los campos del producto existente con los valores del producto recibido
     existingProduct.setName(product.getName());
     existingProduct.setDescription(product.getDescription());
     existingProduct.setPrice(product.getPrice());
-    // Actualizar otros campos según sea necesario
-
-    // Guardar y retornar el producto actualizado
     return productRepository.save(existingProduct);
   }
 }

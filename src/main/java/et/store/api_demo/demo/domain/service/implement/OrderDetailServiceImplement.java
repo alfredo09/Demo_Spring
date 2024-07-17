@@ -34,20 +34,5 @@ public class OrderDetailServiceImplement implements OrderDetailService {
   public void deleteOrderDetail(Integer id) {
     orderDetailRepository.deleteById(id);
   }
-//  @Override
-//  public OrderDetail updateOrderDetail(Integer id, OrderDetail orderDetail) {
-//    // Obtener el detalle de pedido existente por su ID
-//    OrderDetail existingOrderDetail = getOrderDetailById(id)
-//        .orElseThrow(() -> new RuntimeException("OrderDetail not found"));
-//
-//    // Actualizar los campos del detalle de pedido existente con los valores del detalle de pedido recibido
-//    existingOrderDetail.setProductId(orderDetail.getProductId());
-//    existingOrderDetail.setOrderId(orderDetail.getOrderId());
-//    existingOrderDetail.setQuantity(orderDetail.getQuantity());
-//    // Actualizar otros campos según sea necesario
-//
-//    // Guardar y retornar el detalle de pedido actualizado
-//    return orderDetailRepository.save(existingOrderDetail);
-//  }
 
 }

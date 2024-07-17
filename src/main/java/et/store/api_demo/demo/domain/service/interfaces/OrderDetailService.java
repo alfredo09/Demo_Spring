@@ -10,5 +10,4 @@ public interface OrderDetailService {
   Optional<OrderDetail> getOrderDetailById(Integer id);
   OrderDetail saveOrderDetail(OrderDetail orderDetail);
   void deleteOrderDetail(Integer id);
-  //OrderDetail updateOrderDetail(Integer id, OrderDetail orderDetail);
 }

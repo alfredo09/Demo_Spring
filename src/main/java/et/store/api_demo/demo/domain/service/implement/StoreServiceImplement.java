@@ -37,17 +37,12 @@ public class StoreServiceImplement implements StoreService {
 
   @Override
   public Store updateStore(Integer id, Store store) {
-    // Obtener la tienda existente por su ID
+
     Store existingStore = getStoreById(id)
         .orElseThrow(() -> new RuntimeException("Store not found"));
-
-    // Actualizar los campos de la tienda existente con los valores de la tienda recibida
     existingStore.setName(store.getName());
     existingStore.setCity(store.getCity());
     existingStore.setOpeningHours(store.getOpeningHours());
-    // Actualizar otros campos según sea necesario
-
-    // Guardar y retornar la tienda actualizada
     return storeRepository.save(existingStore);
   }
 

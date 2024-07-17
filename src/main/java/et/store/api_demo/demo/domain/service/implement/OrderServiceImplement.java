@@ -42,10 +42,9 @@ public class OrderServiceImplement implements OrderService {
       Order existingOrder = optionalOrder.get();
       existingOrder.setName(order.getName());
       existingOrder.setDate(order.getDate());
-      // Actualiza otros campos según sea necesario
       return orderRepository.save(existingOrder);
     }
-    return null; // Manejo de errores si la orden no existe
+    return null;
   }
 
   @Override

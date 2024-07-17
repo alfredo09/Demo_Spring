@@ -37,16 +37,10 @@ public class CategoryServiceImplement implements CategoryService {
 
   @Override
   public Category updateCategory(Integer id, Category category) {
-    // Obtener la categoría existente por su ID
     Category existingCategory = getCategoryById(id)
         .orElseThrow(() -> new RuntimeException("Category not found"));
-
-    // Actualizar los campos de la categoría existente con los valores de la categoría recibida
     existingCategory.setName(category.getName());
     existingCategory.setDescription(category.getDescription());
-    // Actualizar otros campos según sea necesario
-
-    // Guardar y retornar la categoría actualizada
     return categoryRepository.save(existingCategory);
   }
 
