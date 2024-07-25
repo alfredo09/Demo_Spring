@@ -21,8 +21,8 @@ public class ProductServiceImplement implements ProductService {
   }
 
   @Override
-  public Optional<Product> getProductById(Integer id) {
-    return productRepository.findById(id);
+  public Optional<Product> getProductById(Integer productId) {
+    return productRepository.findById(productId);
   }
 
   @Override

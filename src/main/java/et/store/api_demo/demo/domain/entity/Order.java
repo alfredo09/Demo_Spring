@@ -1,6 +1,7 @@
 package et.store.api_demo.demo.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,16 +13,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.util.List;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "orders")
 public class Order extends Base {
+
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,16 +43,19 @@ public class Order extends Base {
   private String shippingAddress;
 
   @Column(name = "is_delivery")
-  private boolean isDelivery;
+  private boolean delivery;
 
-  @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
   @JsonManagedReference
   private List<OrderDetail> orderDetails;
 
-  public void setOrderDetails(List<OrderDetail> orderDetails) {
-    this.orderDetails = orderDetails;
-    for (OrderDetail detail : orderDetails) {
-      detail.setOrder(this);
-    }
+  public void addOrderDetail(OrderDetail orderDetail) {
+    orderDetail.setOrder(this);
+    this.orderDetails.add(orderDetail);
+  }
+
+  public void removeOrderDetail(OrderDetail orderDetail) {
+    orderDetail.setOrder(null);
+    this.orderDetails.remove(orderDetail);
   }
 }

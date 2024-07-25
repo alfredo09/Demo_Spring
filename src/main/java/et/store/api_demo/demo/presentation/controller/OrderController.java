@@ -2,10 +2,18 @@ package et.store.api_demo.demo.presentation.controller;
 
 import et.store.api_demo.demo.data.repository.OrderDetailRepository;
 import et.store.api_demo.demo.data.repository.OrderRepository;
+import et.store.api_demo.demo.domain.entity.OrderDetail;
+import et.store.api_demo.demo.domain.entity.Product;
+import et.store.api_demo.demo.domain.entity.Store;
 import et.store.api_demo.demo.domain.service.interfaces.OrderService;
 import et.store.api_demo.demo.domain.entity.Order;
+import et.store.api_demo.demo.domain.service.interfaces.ProductService;
+import et.store.api_demo.demo.domain.service.interfaces.StoreService;
+import et.store.api_demo.demo.presentation.request.dto.OrderDetailDto;
 import et.store.api_demo.demo.presentation.request.dto.OrderDto;
+import java.util.ArrayList;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +34,14 @@ public class OrderController {
   @Autowired
   private OrderDetailRepository orderDetailRepository;
 
+  @Autowired
+  private StoreService storeService;
+  @Autowired
+  private ProductService productService; // Debes tener un servicio para manejar las operaciones de producto
+
   @PostMapping
-  public ResponseEntity<Order> createOrder(@RequestBody Order order) {
-    Order createdOrder = orderService.saveOrder(order);
-    return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
+  public ResponseEntity<?> createOrder(@RequestBody OrderDto orderDto) {
+    return orderService.createOrder(orderDto);
   }
 
   @GetMapping("/{orderId}")
@@ -47,11 +59,12 @@ public class OrderController {
     return ResponseEntity.ok(updatedOrder);
   }
 
-  @GetMapping("/{orderId}/details")
-  public ResponseEntity<OrderDto> getOrderWithDetails(@PathVariable Integer orderId) {
-    OrderDto orderDto = orderService.getOrderDtoWithDetails(orderId);
-    if (orderDto != null) {
-      return ResponseEntity.ok(orderDto);
+  @GetMapping("{orderId}/details")
+  public ResponseEntity<List<OrderDetailDto>> getOrderDetails(@PathVariable Integer orderId) {
+    List<OrderDetailDto> orderDetails = orderService.getOrderDtoWithDetails(orderId).getOrderDetails();
+
+    if (orderDetails != null && !orderDetails.isEmpty()) {
+      return ResponseEntity.ok(orderDetails);
     } else {
       return ResponseEntity.notFound().build();
     }
