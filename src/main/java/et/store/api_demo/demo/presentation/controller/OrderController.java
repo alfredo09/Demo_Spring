@@ -59,7 +59,7 @@ public class OrderController {
     return ResponseEntity.ok(updatedOrder);
   }
 
-  @GetMapping("{orderId}/details")
+  @GetMapping("details/{orderId}")
   public ResponseEntity<List<OrderDetailDto>> getOrderDetails(@PathVariable Integer orderId) {
     List<OrderDetailDto> orderDetails = orderService.getOrderDtoWithDetails(orderId).getOrderDetails();
 
@@ -69,4 +69,14 @@ public class OrderController {
       return ResponseEntity.notFound().build();
     }
   }
+  @GetMapping
+  public ResponseEntity<List<Order>> getAllOrders() {
+    List<Order> orders = orderService.getAllOrders(); // Implementa este método en tu servicio
+    if (orders != null && !orders.isEmpty()) {
+      return ResponseEntity.ok(orders);
+    } else {
+      return ResponseEntity.noContent().build(); // O usa ResponseEntity.notFound().build() si es más apropiado
+    }
+  }
+
 }

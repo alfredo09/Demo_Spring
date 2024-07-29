@@ -5,6 +5,10 @@ import et.store.api_demo.demo.domain.entity.Product;
 import et.store.api_demo.demo.domain.service.interfaces.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +36,10 @@ public class ProductServiceImplement implements ProductService {
 
   @Override
   public void deleteProduct(Integer id) {
-    productRepository.deleteById(id);
+    Product product = productRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Product not found"));
+    product.setActive(false);  // Cambia el estado a inactivo en lugar de eliminar el producto
+    productRepository.save(product);
   }
 
   @Override
@@ -48,5 +55,11 @@ public class ProductServiceImplement implements ProductService {
     existingProduct.setDescription(product.getDescription());
     existingProduct.setPrice(product.getPrice());
     return productRepository.save(existingProduct);
+  }
+
+  @Override
+  public Page<Product> getProductsPage(int page, int size, String sortBy, String sortOrder) {
+    Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortOrder), sortBy));
+    return productRepository.findAll(pageable);
   }
 }

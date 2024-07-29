@@ -11,12 +11,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-
+import org.hibernate.annotations.Where;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "products")
+@Where(clause = "active = true")
 public class Product extends Base {
 
   @Id
@@ -32,5 +33,5 @@ public class Product extends Base {
   private String description;
   private int stock;
   private double price;
-  private boolean active;
+  private boolean active = true;
 }

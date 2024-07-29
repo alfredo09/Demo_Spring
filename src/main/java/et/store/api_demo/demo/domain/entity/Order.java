@@ -1,5 +1,6 @@
 package et.store.api_demo.demo.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -31,6 +32,7 @@ public class Order extends Base {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "store_id", nullable = false)
+  @JsonIgnore
   private Store store;
 
   @Column(nullable = false)
@@ -47,15 +49,6 @@ public class Order extends Base {
 
   @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
   @JsonManagedReference
+  @JsonIgnore
   private List<OrderDetail> orderDetails;
-
-  public void addOrderDetail(OrderDetail orderDetail) {
-    orderDetail.setOrder(this);
-    this.orderDetails.add(orderDetail);
-  }
-
-  public void removeOrderDetail(OrderDetail orderDetail) {
-    orderDetail.setOrder(null);
-    this.orderDetails.remove(orderDetail);
-  }
 }
