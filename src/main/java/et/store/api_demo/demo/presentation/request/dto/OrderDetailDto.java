@@ -11,4 +11,5 @@ public class OrderDetailDto {
 
   private Integer productId;
   private Integer quantity;
+  private Double price;
 }
